@@ -79,8 +79,11 @@ def verificarPalabraAgregada(codigo_imagen):
 
 
 def juegoMastermind():
-    # Implementar la lógica del juego Mastermind
-    # (Esta parte del código está pendiente de implementar)
+    generacionOcultado()
+    print('\n\t\tAPLICACIÓN MASTERMIND')
+    print('\n\tSe ha recuperado la combinación')
+    nick = input('\n\t\tTu nickname, por favor: ')
+    print(f'\n\t¡Comienza el juego para {nick}!')
     return
 
 
