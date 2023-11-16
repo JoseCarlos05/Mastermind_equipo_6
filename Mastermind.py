@@ -88,7 +88,7 @@ def verificarPalabraAgregada(codigo_imagen):
 def juegoMastermind():
     # Solicitar al usuario el tipo de combinación a generar
     tipo_combinacion = int(input("Seleccione el tipo de combinación a generar (1: Números, 2: Palabra): "))
-    
+
     print('\n\t\tAPLICACIÓN MASTERMIND')
     print('\n\tSe ha recuperado la combinación')
     nick = input('\n\tTu nickname, por favor: ')
@@ -96,18 +96,43 @@ def juegoMastermind():
 
     if tipo_combinacion == 1:
         combinacion = num_aleatorio()
+        resultado = ''
         print('\t\t¡Tienes 4 intentos!')
         print('\t\t\t¡Comenzamos!\n')
         print('\tPropuesto\t\t\tResultado\n')
-        propuesto = int(input('Escribe el número propuesto: '))
-            
+        propuesto = input('Escribe el número propuesto: ')
+        for pos_numero in range(len(propuesto)):
+            numero = propuesto[pos_numero]
+            if propuesto[pos_numero] == combinacion[pos_numero]:
+                resultado += ' ◯ '
+
+            elif str(numero) in combinacion:
+                resultado += ' - '
+
+            else:
+                resultado += ' x '
+        print(resultado + '\n')
+
+
 
     elif tipo_combinacion == 2:
         combinacion = pal_aleatoria()
+        resultado = ''
         print('\t\t¡Tienes 7 intentos!')
         print('\t\t\t¡Comenzamos!\n')
         print('\tPropuesto\t\t\tResultado\n')
         propuesto = input('Escribe la palabra propuesta: ')
+        for pos_letra in range(len(propuesto)):
+            letra = propuesto[pos_letra]
+            if propuesto[pos_letra] == combinacion[pos_letra]:
+                resultado += ' ◯ '
+
+            elif str(letra) in combinacion:
+                resultado += ' - '
+
+            else:
+                resultado += ' x '
+        print(resultado + '\n')
     return
 
 
