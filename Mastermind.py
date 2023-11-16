@@ -26,32 +26,39 @@ def creacionLogo():
     return
 
 
-def generacionOcultado():
-    # Solicitar al usuario el tipo de combinación a generar
-    tipo_combinacion = int(input("Seleccione el tipo de combinación a generar (1: Números, 2: Palabra): "))
+def num_aleatorio():
+    # Generar secuencia numérica
+    combinacion = ''.join(str(random.randint(0, 9)) for _ in range(5))
+    return combinacion
 
-    if tipo_combinacion == 1:
-        # Generar secuencia numérica
-        combinacion = ''.join(str(random.randint(0, 9)) for _ in range(5))
-    elif tipo_combinacion == 2:
-        # Obtener palabra aleatoria del archivo palabras.dat
-        with open("Ficheros necesarios/palabras.dat", "rb") as file:
-            palabras = file.readlines()
-            combinacion = random.choice(palabras).decode().strip()
-    else:
-        print("Opción no válida. Debe seleccionar 1 o 2.")
-        return
 
-    print(f"Combinación generada y ocultada: {combinacion}")
+def pal_aleatoria():
+    # Obtener palabra aleatoria del archivo palabras.dat
+    with open("Ficheros necesarios/palabras.dat", "rb") as file:
+        palabras = file.readlines()
+        combinacion = random.choice(palabras).decode().strip()
     return combinacion
 
 
 def ocultar_texto_en_imagen():
+    # Solicitar al usuario el tipo de combinación a generar
+    tipo_combinacion = int(input("Seleccione el tipo de combinación a generar (1: Números, 2: Palabra): "))
+
+    if tipo_combinacion == 1:
+        combinacion = num_aleatorio()
+    elif tipo_combinacion == 2:
+        combinacion = pal_aleatoria()
+    else:
+        print("Opción no válida. Debe seleccionar 1 o 2.")
+        return
+    print(f"Combinación generada y ocultada: {combinacion}")
+
+
     # Cargar la imagen
     img2 = cv2.imread("textoIMG.jpg")
 
     # Convertir el texto a binario
-    pal_binario = ''.join(format(ord(caracter), '08b') for caracter in generacionOcultado())
+    pal_binario = ''.join(format(ord(caracter), '08b') for caracter in combinacion)
 
     # Obtener las dimensiones de la imagen
     alto, ancho, canales = img2.shape
@@ -79,14 +86,28 @@ def verificarPalabraAgregada(codigo_imagen):
 
 
 def juegoMastermind():
-    generacionOcultado()
+    # Solicitar al usuario el tipo de combinación a generar
+    tipo_combinacion = int(input("Seleccione el tipo de combinación a generar (1: Números, 2: Palabra): "))
+    
     print('\n\t\tAPLICACIÓN MASTERMIND')
     print('\n\tSe ha recuperado la combinación')
     nick = input('\n\tTu nickname, por favor: ')
     print(f'\n\t¡Comienza el juego para {nick}!\n')
-    print('\t\t¡Tienes 4 intentos!')
-    print('\t\t\t¡Comenzamos!\n')
-    print('\tPropuesto\t\t\tResultado\n')
+
+    if tipo_combinacion == 1:
+        combinacion = num_aleatorio()
+        print('\t\t¡Tienes 4 intentos!')
+        print('\t\t\t¡Comenzamos!\n')
+        print('\tPropuesto\t\t\tResultado\n')
+        propuesto = int(input('Escribe el número propuesto: '))
+            
+
+    elif tipo_combinacion == 2:
+        combinacion = pal_aleatoria()
+        print('\t\t¡Tienes 7 intentos!')
+        print('\t\t\t¡Comenzamos!\n')
+        print('\tPropuesto\t\t\tResultado\n')
+        propuesto = input('Escribe la palabra propuesta: ')
     return
 
 
