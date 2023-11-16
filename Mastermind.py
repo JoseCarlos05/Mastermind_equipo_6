@@ -86,7 +86,7 @@ def juegoMastermind():
     print(f'\n\t¡Comienza el juego para {nick}!\n')
     print('\t\t¡Tienes 4 intentos!')
     print('\t\t\t¡Comenzamos!\n')
-
+    print('\tPropuesto\t\t\tResultado\n')
     return
 
 
