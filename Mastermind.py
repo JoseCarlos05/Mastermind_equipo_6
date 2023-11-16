@@ -1,7 +1,6 @@
 import cv2
 import random
 
-
 def creacionLogo():
     img = cv2.imread('Ficheros necesarios/mastermind_logorigin.png')
 
@@ -47,9 +46,30 @@ def generacionOcultado():
     return combinacion
 
 
-def ocultadoPalabra():
+def ocultar_texto_en_imagen():
+    # Cargar la imagen
+    img2 = cv2.imread("textoIMG.jpg")
 
-    return
+    # Convertir el texto a binario
+    pal_binario = ''.join(format(ord(caracter), '08b') for caracter in generacionOcultado())
+
+    # Obtener las dimensiones de la imagen
+    alto, ancho, canales = img2.shape
+
+    # Variable para seguir la posición del bit en el texto a ocultar
+    bit_pos = 0
+
+    # Iterar sobre los píxeles de la imagen
+    for i in range(alto):
+        for j in range(ancho):
+            for k in range(canales):
+                if bit_pos < len(pal_binario):
+                    # Reemplazar el bit menos significativo con el bit del texto
+                    img2[i, j, k] = img2[i, j, k] & ~1 | int(pal_binario[bit_pos])
+                    bit_pos += 1
+
+    # Guardar la nueva imagen
+    cv2.imwrite("textoIMG.jpg", img2)
 
 
 def verificarPalabraAgregada(codigo_imagen):
@@ -59,10 +79,8 @@ def verificarPalabraAgregada(codigo_imagen):
 
 
 def juegoMastermind():
-    generacionOcultado()
-    print('\n\tSe ha recuperado la combinación')
-    nick = input('\n\t\tTu nickname, por favor: ')
-    print(f'\n\t¡Comienza el juego para {nick}!')
+    # Implementar la lógica del juego Mastermind
+    # (Esta parte del código está pendiente de implementar)
     return
 
 
@@ -94,7 +112,7 @@ def menu():
         if opcion == 1:
             creacionLogo()
         elif opcion == 2:
-            generacionOcultado()
+            ocultar_texto_en_imagen()
         elif opcion == 3:
             juegoMastermind()
         elif opcion == 4:
