@@ -51,7 +51,7 @@ def ocultar_texto_en_imagen():
     else:
         print("Opción no válida. Debe seleccionar 1 o 2.")
         return
-    print(f"Combinación generada y ocultada: {combinacion}")
+    print(f"Combinación generada y ocultada: {combinacion} \n")
 
 
     # Cargar la imagen
@@ -96,43 +96,83 @@ def juegoMastermind():
 
     if tipo_combinacion == 1:
         combinacion = num_aleatorio()
-        resultado = ''
+        salir = False
         print('\t\t¡Tienes 4 intentos!')
         print('\t\t\t¡Comenzamos!\n')
         print('\tPropuesto\t\t\tResultado\n')
-        propuesto = input('Escribe el número propuesto: ')
-        for pos_numero in range(len(propuesto)):
-            numero = propuesto[pos_numero]
-            if propuesto[pos_numero] == combinacion[pos_numero]:
-                resultado += ' ◯ '
+        print(combinacion)
+        while not salir:
+            for intento in range(4):
+                propuesto = input('Escribe el número propuesto: ')
+                if len(propuesto) == 5:
+                    resultado = ''
+                    for pos_numero in range(len(propuesto)):
+                        numero = propuesto[pos_numero]
+                        if propuesto[pos_numero] == combinacion[pos_numero]:
+                            resultado += ' ◯ '
 
-            elif str(numero) in combinacion:
-                resultado += ' - '
+                        elif str(numero) in combinacion:
+                            resultado += ' - '
 
-            else:
-                resultado += ' x '
-        print(resultado + '\n')
+                        else:
+                            resultado += ' x '
+                    print(resultado + '\n')
+                    if resultado == ' ◯  ◯  ◯  ◯  ◯ ':
+                        print('felicidades')
+                        salir = True
+
+                    elif intento == 4:
+                        print('Lo siento')
+                        salir = True
+
+                    else:
+                        salir = False
+                else:
+                    print('El número tiene que tener 5 dígitos')
+                    intento -= 1
+
+
+
 
 
 
     elif tipo_combinacion == 2:
         combinacion = pal_aleatoria()
-        resultado = ''
+        salir = False
         print('\t\t¡Tienes 7 intentos!')
         print('\t\t\t¡Comenzamos!\n')
         print('\tPropuesto\t\t\tResultado\n')
-        propuesto = input('Escribe la palabra propuesta: ')
-        for pos_letra in range(len(propuesto)):
-            letra = propuesto[pos_letra]
-            if propuesto[pos_letra] == combinacion[pos_letra]:
-                resultado += ' ◯ '
+        print(combinacion)
+        while not salir:
+            for intento in range(7):
+                propuesto = input('Escribe la palabra propuesta: ')
+                if len(propuesto) == 8:
+                    resultado = ''
+                    for pos_letra in range(len(propuesto)):
+                        letra = propuesto[pos_letra]
+                        if propuesto[pos_letra] == combinacion[pos_letra]:
+                            resultado += ' ◯ '
 
-            elif str(letra) in combinacion:
-                resultado += ' - '
+                        elif str(letra) in combinacion:
+                            resultado += ' - '
 
-            else:
-                resultado += ' x '
-        print(resultado + '\n')
+                        else:
+                            resultado += ' x '
+                    print(resultado + '\n')
+                    if resultado == ' ◯  ◯  ◯  ◯  ◯  ◯  ◯  ◯ ':
+                        print('felicidades')
+                        break
+
+                    elif intento == 7:
+                        print('Lo siento')
+                        salir = True
+
+                    else:
+                        salir = False
+                else:
+                    print('La palabra tiene que tener 8 letras')
+                    intento -= 1
+
     return
 
 
