@@ -1,5 +1,7 @@
 import cv2
 import random
+import time
+import pickle
 
 def creacionLogo():
     img = cv2.imread('Ficheros necesarios/mastermind_logorigin.png')
@@ -87,6 +89,7 @@ def verificarPalabraAgregada(codigo_imagen):
 
 def juegoMastermind():
     # Solicitar al usuario el tipo de combinación a generar
+    global tiempo_inicial, tiempo_final
     tipo_combinacion = int(input("Seleccione el tipo de combinación a generar (1: Números, 2: Palabra): "))
 
     print('\n\t\tAPLICACIÓN MASTERMIND')
@@ -102,6 +105,8 @@ def juegoMastermind():
         intentos_max = 4
         intento = 0
         while intento < intentos_max:
+            print(combinacion)
+            tiempo_inicial = time.time()
             propuesto = input('Escribe el número propuesto: ')
             intento += 1
             if len(propuesto) == 5:
@@ -120,6 +125,9 @@ def juegoMastermind():
                 print(resultado + '\n')
                 if resultado == ' ◯  ◯  ◯  ◯  ◯ ':
                     print('felicidades')
+                    tiempo_final = time.time()
+                    tiempo = tiempo_final - tiempo_inicial
+                    rankingRecord(nick, intento, tiempo)
                     break
                 elif intento == 4 and resultado != ' ◯  ◯  ◯  ◯  ◯ ':
                     print('Lo siento')
@@ -131,19 +139,15 @@ def juegoMastermind():
 
 
 
-
-
-
-
     elif tipo_combinacion == 2:
         combinacion = pal_aleatoria()
-        salir = False
         print('\t\t¡Tienes 7 intentos!')
         print('\t\t\t¡Comenzamos!\n')
         print('\tPropuesto\t\t\tResultado\n')
         intentos_max = 7
         intento = 0
         while intento < intentos_max:
+            tiempo_inicial = time.time()
             propuesto = input('Escribe la palabra propuesta: ')
             intento += 1
             if len(propuesto) == 5:
@@ -162,6 +166,8 @@ def juegoMastermind():
                 print(resultado + '\n')
                 if resultado == ' ◯  ◯  ◯  ◯  ◯ ':
                     print('felicidades')
+                    tiempo = tiempo_final - tiempo_inicial
+                    rankingRecord(nick, intento, tiempo)
                     break
                 elif intento == 4 and resultado != ' ◯  ◯  ◯  ◯  ◯ ':
                     print('Lo siento')
@@ -169,13 +175,18 @@ def juegoMastermind():
             else:
                 print('La palabra tiene que tener 7 letras')
                 intento -= 1
-
     return
 
 
-def rankingRecord():
-    # Implementar la lógica del ranking de récords
-    # (Esta parte del código está pendiente de implementar)
+def rankingRecord(fnick, fintento, ftiempo):
+    f = open("ranking.dat", 'rb')
+    ranking = pickle.load(f)
+    jugador = {'Nombre': fnick, 'Tiempo': ftiempo, 'Intentos': fintento}
+    ranking.append(jugador)
+    ranking_archivo = ranking[:10]
+    f = open("ranking.dat", 'wb')
+    pickle.dump(ranking_archivo, f)
+    f.close()
     return
 
 
