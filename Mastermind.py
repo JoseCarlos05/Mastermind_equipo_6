@@ -1,4 +1,3 @@
-import time
 import cv2
 import random
 
@@ -95,50 +94,41 @@ def juegoMastermind():
     nick = input('\n\tTu nickname, por favor: ')
     print(f'\n\t¡Comienza el juego para {nick}!\n')
 
-
     if tipo_combinacion == 1:
         combinacion = num_aleatorio()
-        vuelta = 0
-        salir = False
         print('\t\t¡Tienes 4 intentos!')
         print('\t\t\t¡Comenzamos!\n')
         print('\tPropuesto\t\t\tResultado\n')
-        print(combinacion)
-        while not salir:
-            for intento in range(4):
-                tiempo_inicio = time.time()
-                vuelta += 1
-                propuesto = input('Escribe el número propuesto: ')
-                if len(propuesto) == 5:
-                    resultado = ''
-                    for pos_numero in range(len(propuesto)):
-                        numero = propuesto[pos_numero]
-                        if propuesto[pos_numero] == combinacion[pos_numero]:
-                            resultado += ' ◯ '
+        intentos_max = 4
+        intento = 0
+        while intento < intentos_max:
+            propuesto = input('Escribe el número propuesto: ')
+            intento += 1
+            if len(propuesto) == 5:
+                resultado = ''
+                for pos_numero in range(len(propuesto)):
+                    numero = propuesto[pos_numero]
+                    if propuesto[pos_numero] == combinacion[pos_numero]:
+                        resultado += ' ◯ '
 
-                        elif str(numero) in combinacion:
-                            resultado += ' - '
+                    elif str(numero) in combinacion:
+                        resultado += ' - '
 
-                        else:
-                            resultado += ' x '
-                    print(resultado + '\n')
-                    if resultado == ' ◯  ◯  ◯  ◯  ◯ ':
-                        print('felicidades')
-                        salir = True
-                        tiempo_final = time.time()
-                        tiempo_total = tiempo_final - tiempo_inicio
-                        print(f'Has tartado {tiempo_total} segundos.')
-
-                    elif vuelta == 4:
-                        print('Lo siento')
-                        salir = True
-                        tiempo_final = time.time()
-                        tiempo_total = tiempo_final - tiempo_inicio
-                        print(f'Has tartado {tiempo_total} segundos.')
                     else:
-                        salir = False
-                else:
-                    print('El número tiene que tener 5 dígitos')
+                        resultado += ' x '
+
+                print(resultado + '\n')
+                if resultado == ' ◯  ◯  ◯  ◯  ◯ ':
+                    print('felicidades')
+                    break
+                elif intento == 4 and resultado != ' ◯  ◯  ◯  ◯  ◯ ':
+                    print('Lo siento')
+                    break
+            else:
+                print('El número tiene que tener 5 dígitos')
+                intento -= 1
+
+
 
 
 
@@ -151,45 +141,41 @@ def juegoMastermind():
         print('\t\t¡Tienes 7 intentos!')
         print('\t\t\t¡Comenzamos!\n')
         print('\tPropuesto\t\t\tResultado\n')
-        print(combinacion)
-        while not salir:
-            for intento in range(7):
-                propuesto = input('Escribe la palabra propuesta: ')
-                if len(propuesto) == 8:
-                    resultado = ''
-                    for pos_letra in range(len(propuesto)):
-                        letra = propuesto[pos_letra]
-                        if propuesto[pos_letra] == combinacion[pos_letra]:
-                            resultado += ' ◯ '
+        intentos_max = 7
+        intento = 0
+        while intento < intentos_max:
+            propuesto = input('Escribe la palabra propuesta: ')
+            intento += 1
+            if len(propuesto) == 5:
+                resultado = ''
+                for pos_numero in range(len(propuesto)):
+                    numero = propuesto[pos_numero]
+                    if propuesto[pos_numero] == combinacion[pos_numero]:
+                        resultado += ' ◯ '
 
-                        elif str(letra) in combinacion:
-                            resultado += ' - '
-
-                        else:
-                            resultado += ' x '
-                    print(resultado + '\n')
-                    if resultado == ' ◯  ◯  ◯  ◯  ◯  ◯  ◯  ◯ ':
-                        print('felicidades')
-                        break
-
-                    elif intento == 7:
-                        print('Lo siento')
-                        salir = True
+                    elif str(numero) in combinacion:
+                        resultado += ' - '
 
                     else:
-                        salir = False
-                else:
-                    print('La palabra tiene que tener 8 letras')
-                    intento -= 1
+                        resultado += ' x '
+
+                print(resultado + '\n')
+                if resultado == ' ◯  ◯  ◯  ◯  ◯ ':
+                    print('felicidades')
+                    break
+                elif intento == 4 and resultado != ' ◯  ◯  ◯  ◯  ◯ ':
+                    print('Lo siento')
+                    break
+            else:
+                print('El número tiene que tener 5 dígitos')
+                intento -= 1
 
     return
 
 
 def rankingRecord():
-
-    ranking = []
-    if nick == 1:
-        ranking.append(nick)
+    # Implementar la lógica del ranking de récords
+    # (Esta parte del código está pendiente de implementar)
     return
 
 
