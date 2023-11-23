@@ -167,7 +167,7 @@ def juegoMastermind():
                     print('Lo siento')
                     break
             else:
-                print('El número tiene que tener 5 dígitos')
+                print('La palabra tiene que tener 7 letras')
                 intento -= 1
 
     return
