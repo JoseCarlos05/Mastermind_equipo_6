@@ -101,11 +101,10 @@ def juegoMastermind():
         combinacion = num_aleatorio()
         print('\t\t¡Tienes 4 intentos!')
         print('\t\t\t¡Comenzamos!\n')
-        print('\tPropuesto\t\t\tResultado\n')
         intentos_max = 4
         intento = 0
+        final = ''
         while intento < intentos_max:
-            print(combinacion)
             tiempo_inicial = time.time()
             propuesto = input('Escribe el número propuesto: ')
             intento += 1
@@ -123,14 +122,41 @@ def juegoMastermind():
                         resultado += ' x '
 
                 print(resultado + '\n')
+                final = final + '\n\t  ' + propuesto + '\t\t\t ' + resultado
+
                 if resultado == ' ◯  ◯  ◯  ◯  ◯ ':
-                    print('felicidades')
+                    print('\tPropuesto\t\t\tResultado')
+                    print(final)
+
+                    print('\n\t¡Has adivinado la combinación!')
+                    print(f'\t\t\t¡En {intento} intentos!')
+                    volver_jugar = input('\n\t\t¿Volvemos a jugar (S/N)? ')
+
+                    if volver_jugar == 'S' or volver_jugar == 's':
+                        juegoMastermind()
+                    elif volver_jugar == 'N' or volver_jugar == 'n':
+                        print('Fin del juego')
+                    else:
+                        print('Tienes que escribir S (Sí) o N (No)')
+
                     tiempo_final = time.time()
                     tiempo = tiempo_final - tiempo_inicial
                     rankingRecord(nick, intento, tiempo)
                     break
                 elif intento == 4 and resultado != ' ◯  ◯  ◯  ◯  ◯ ':
-                    print('Lo siento')
+                    print('\tPropuesto\t\t\tResultado')
+                    print(final)
+
+                    print('\n\t\t¡Has agotado los intentos!')
+
+                    volver_jugar = input('\n\t\t¿Volvemos a jugar (S/N)? ')
+
+                    if volver_jugar == 'S' or volver_jugar == 's':
+                        juegoMastermind()
+                    elif volver_jugar == 'N' or volver_jugar == 'n':
+                        print('Fin del juego')
+                    else:
+                        print('Tienes que escribir S (Sí) o N (No)')
                     break
             else:
                 print('El número tiene que tener 5 dígitos')
@@ -143,14 +169,14 @@ def juegoMastermind():
         combinacion = pal_aleatoria()
         print('\t\t¡Tienes 7 intentos!')
         print('\t\t\t¡Comenzamos!\n')
-        print('\tPropuesto\t\t\tResultado\n')
         intentos_max = 7
         intento = 0
+        final = ''
         while intento < intentos_max:
             tiempo_inicial = time.time()
             propuesto = input('Escribe la palabra propuesta: ')
             intento += 1
-            if len(propuesto) == 5:
+            if len(propuesto) == 8:
                 resultado = ''
                 for pos_numero in range(len(propuesto)):
                     numero = propuesto[pos_numero]
@@ -164,13 +190,41 @@ def juegoMastermind():
                         resultado += ' x '
 
                 print(resultado + '\n')
+                final = final + '\n\t' + propuesto + '\t' + resultado
+
                 if resultado == ' ◯  ◯  ◯  ◯  ◯ ':
-                    print('felicidades')
+                    print('\tPropuesto\t\t\tResultado')
+                    print(final)
+
+                    print('\n\t¡Has adivinado la combinación!')
+                    print(f'\t\t\t¡En {intento} intentos!')
+                    volver_jugar = input('\n\t\t¿Volvemos a jugar (S/N)? ')
+
+                    if volver_jugar == 'S' or volver_jugar == 's':
+                        juegoMastermind()
+                    elif volver_jugar == 'N' or volver_jugar == 'n':
+                        print('Fin del juego')
+                    else:
+                        print('Tienes que escribir S (Sí) o N (No)')
+
+                    tiempo_final = time.time()
                     tiempo = tiempo_final - tiempo_inicial
                     rankingRecord(nick, intento, tiempo)
                     break
-                elif intento == 4 and resultado != ' ◯  ◯  ◯  ◯  ◯ ':
-                    print('Lo siento')
+                elif intento == 7 and resultado != ' ◯  ◯  ◯  ◯  ◯ ':
+                    print('\tPropuesto\t\t\tResultado')
+                    print(final)
+
+                    print('\n\t\t¡Has agotado los intentos!')
+
+                    volver_jugar = input('\n\t\t ¿Volvemos a jugar (S/N)? ')
+
+                    if volver_jugar == 'S' or volver_jugar == 's':
+                        juegoMastermind()
+                    elif volver_jugar == 'N' or volver_jugar == 'n':
+                        print('Fin del juego')
+                    else:
+                        print('Tienes que escribir S (Sí) o N (No)')
                     break
             else:
                 print('La palabra tiene que tener 7 letras')
