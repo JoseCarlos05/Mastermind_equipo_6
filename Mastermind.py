@@ -141,7 +141,9 @@ def juegoMastermind():
 
                     tiempo_final = time.time()
                     tiempo = tiempo_final - tiempo_inicial
-                    rankingRecord(nick, intento, tiempo)
+                    hora = time.strftime("%H:%M:%S", time.localtime())
+                    fecha = time.strftime("%Y-%m-%d", time.localtime())
+                    actualizar_rankingRecord(nick, intento, tiempo, hora, fecha)
                     break
                 elif intento == 4 and resultado != ' ◯  ◯  ◯  ◯  ◯ ':
                     print('\tPropuesto\t\t\tResultado')
@@ -209,7 +211,9 @@ def juegoMastermind():
 
                     tiempo_final = time.time()
                     tiempo = tiempo_final - tiempo_inicial
-                    rankingRecord(nick, intento, tiempo)
+                    hora = time.strftime("%H:%M:%S", time.localtime())
+                    fecha = time.strftime("%Y-%m-%d", time.localtime())
+                    actualizar_rankingRecord(nick, intento, tiempo, hora, fecha)
                     break
                 elif intento == 7 and resultado != ' ◯  ◯  ◯  ◯  ◯ ':
                     print('\tPropuesto\t\t\tResultado')
@@ -232,16 +236,35 @@ def juegoMastermind():
     return
 
 
-def rankingRecord(fnick, fintento, ftiempo):
+def actualizar_rankingRecord(fnick, fintento, ftiempo, fhora, ffecha):
     f = open("ranking.dat", 'rb')
-    ranking = pickle.load(f)
-    jugador = {'Nombre': fnick, 'Tiempo': ftiempo, 'Intentos': fintento}
+    try:
+        ranking = pickle.load(f)
+    except EOFError:
+        ranking = list()
+    f.close()
+    jugador = {'Nombre': fnick, 'Tiempo': ftiempo, 'Intentos': fintento, 'Hora': fhora, 'Fecha': ffecha}
     ranking.append(jugador)
     ranking_archivo = ranking[:10]
     f = open("ranking.dat", 'wb')
     pickle.dump(ranking_archivo, f)
     f.close()
     return
+
+
+def rankingRecord():
+    f = open("ranking.dat", 'rb')
+    try:
+        ranking = pickle.load(f)
+    except EOFError:
+        ranking = list()
+        print('Todavía no hay registros de partidas jugadas.')
+    f.close()
+    ranking10 = sorted(ranking, key=lambda x: (x['Intentos'], x['Tiempo']))
+    print('Top 10 jugadores: ')
+    for jugadores in ranking10:
+        print('El jugador %s consiguió a las %s del dia %s adivinar la combianción en %s intentos y %s segundos.' % (jugadores['Nombre'], jugadores['Hora'], jugadores['Fecha'], jugadores['Intentos'], jugadores['Tiempo']))
+    print()
 
 
 def informePartidas():
