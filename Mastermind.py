@@ -2,6 +2,8 @@ import cv2
 import random
 import time
 import pickle
+from stegano import lsb
+import os
 
 def creacionLogo():
     img = cv2.imread('Ficheros necesarios/mastermind_logorigin.png')
@@ -24,7 +26,7 @@ def creacionLogo():
 
     cv2.putText(img, texto2, posicion2, font2, tama_letra2, color_letra2, grosor_letra2)
 
-    cv2.imwrite("textoIMG.jpg", img)
+    cv2.imwrite("textoIMG.png", img)
     return
 
 
@@ -42,43 +44,23 @@ def pal_aleatoria():
     return combinacion
 
 
-def ocultar_texto_en_imagen():
-    # Solicitar al usuario el tipo de combinación a generar
+def ocultar_mensaje_en_imagen():
+    if os.path.exists("textoIMG_ocultado.png"):
+        os.remove("textoIMG_ocultado.png")
     tipo_combinacion = int(input("Seleccione el tipo de combinación a generar (1: Números, 2: Palabra): "))
-
     if tipo_combinacion == 1:
         combinacion = num_aleatorio()
+        ocultado = lsb.hide("textoIMG.png", combinacion)
+        ocultado.save("textoIMG_ocultado.png")
+        print("\nCombinación generada y ocultada\n")
     elif tipo_combinacion == 2:
         combinacion = pal_aleatoria()
+        ocultado = lsb.hide("textoIMG.png", combinacion)
+        ocultado.save("textoIMG_ocultado.png")
+        print("\nCombinación generada y ocultada\n")
     else:
-        print("Opción no válida. Debe seleccionar 1 o 2.")
-        return
-    print(f"Combinación generada y ocultada: {combinacion} \n")
-
-
-    # Cargar la imagen
-    img2 = cv2.imread("textoIMG.jpg")
-
-    # Convertir el texto a binario
-    pal_binario = ''.join(format(ord(caracter), '08b') for caracter in combinacion)
-
-    # Obtener las dimensiones de la imagen
-    alto, ancho, canales = img2.shape
-
-    # Variable para seguir la posición del bit en el texto a ocultar
-    bit_pos = 0
-
-    # Iterar sobre los píxeles de la imagen
-    for i in range(alto):
-        for j in range(ancho):
-            for k in range(canales):
-                if bit_pos < len(pal_binario):
-                    # Reemplazar el bit menos significativo con el bit del texto
-                    img2[i, j, k] = img2[i, j, k] & ~1 | int(pal_binario[bit_pos])
-                    bit_pos += 1
-
-    # Guardar la nueva imagen
-    cv2.imwrite("textoIMG.jpg", img2)
+        print('Tienes que elegir entre las opciones (1: Números, 2: Palabra): ')
+    return
 
 
 def verificarPalabraAgregada(codigo_imagen):
@@ -90,15 +72,14 @@ def verificarPalabraAgregada(codigo_imagen):
 def juegoMastermind():
     # Solicitar al usuario el tipo de combinación a generar
     global tiempo_inicial, tiempo_final
-    tipo_combinacion = int(input("Seleccione el tipo de combinación a generar (1: Números, 2: Palabra): "))
-
     print('\n\t\tAPLICACIÓN MASTERMIND')
     print('\n\tSe ha recuperado la combinación')
     nick = input('\n\tTu nickname, por favor: ')
     print(f'\n\t¡Comienza el juego para {nick}!\n')
+    combinacion = lsb.reveal("textoIMG_ocultado.png")
 
-    if tipo_combinacion == 1:
-        combinacion = num_aleatorio()
+    if len(combinacion) == 5:
+        combinacion = lsb.reveal("textoIMG_ocultado.png")
         print('\t\t¡Tienes 4 intentos!')
         print('\t\t\t¡Comenzamos!\n')
         intentos_max = 4
@@ -133,11 +114,13 @@ def juegoMastermind():
                     volver_jugar = input('\n\t\t¿Volvemos a jugar (S/N)? ')
 
                     if volver_jugar == 'S' or volver_jugar == 's':
+                        print('\n')
+                        ocultar_mensaje_en_imagen()
                         juegoMastermind()
                     elif volver_jugar == 'N' or volver_jugar == 'n':
-                        print('Fin del juego')
+                        print('\nFin del juego')
                     else:
-                        print('Tienes que escribir S (Sí) o N (No)')
+                        print('\nTienes que escribir S (Sí) o N (No)')
 
                     tiempo_final = time.time()
                     tiempo = tiempo_final - tiempo_inicial
@@ -154,6 +137,7 @@ def juegoMastermind():
                     volver_jugar = input('\n\t\t¿Volvemos a jugar (S/N)? ')
 
                     if volver_jugar == 'S' or volver_jugar == 's':
+                        ocultar_mensaje_en_imagen()
                         juegoMastermind()
                     elif volver_jugar == 'N' or volver_jugar == 'n':
                         print('Fin del juego')
@@ -167,8 +151,8 @@ def juegoMastermind():
 
 
 
-    elif tipo_combinacion == 2:
-        combinacion = pal_aleatoria()
+    elif len(combinacion) == 8:
+        combinacion = lsb.reveal("textoIMG_ocultado.png")
         print('\t\t¡Tienes 7 intentos!')
         print('\t\t\t¡Comenzamos!\n')
         intentos_max = 7
@@ -289,7 +273,7 @@ def menu():
         if opcion == 1:
             creacionLogo()
         elif opcion == 2:
-            ocultar_texto_en_imagen()
+            ocultar_mensaje_en_imagen()
         elif opcion == 3:
             juegoMastermind()
         elif opcion == 4:
