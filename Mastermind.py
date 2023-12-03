@@ -176,9 +176,9 @@ def juegoMastermind():
                         resultado += ' x '
 
                 print(resultado + '\n')
-                final = final + '\n\t' + propuesto + '\t' + resultado
+                final = final + '\n\t' + propuesto + '\t ' + resultado
 
-                if resultado == ' ◯  ◯  ◯  ◯  ◯ ':
+                if resultado == ' ◯  ◯  ◯  ◯  ◯  ◯  ◯  ◯ ':
                     print('\tPropuesto\t\t\tResultado')
                     print(final)
 
@@ -199,13 +199,14 @@ def juegoMastermind():
                     fecha = time.strftime("%Y-%m-%d", time.localtime())
                     actualizar_rankingRecord(nick, intento, tiempo, hora, fecha)
                     break
-                elif intento == 7 and resultado != ' ◯  ◯  ◯  ◯  ◯ ':
+                elif intento == 7 and resultado != ' ◯  ◯  ◯  ◯  ◯  ◯  ◯  ◯ ':
                     print('\tPropuesto\t\t\tResultado')
                     print(final)
 
                     print('\n\t\t¡Has agotado los intentos!')
 
                     volver_jugar = input('\n\t\t ¿Volvemos a jugar (S/N)? ')
+                    print('\n')
 
                     if volver_jugar == 'S' or volver_jugar == 's':
                         juegoMastermind()
