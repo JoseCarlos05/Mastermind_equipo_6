@@ -228,8 +228,16 @@ def actualizar_rankingRecord(fnick, fintento, ftiempo, fhora, ffecha):
     except EOFError:
         ranking = list()
     f.close()
-    jugador = {'Nombre': fnick, 'Tiempo': ftiempo, 'Intentos': fintento, 'Hora': fhora, 'Fecha': ffecha}
-    ranking.append(jugador)
+
+    jugador_existente = next((jugador for jugador in ranking if jugador['Nombre'] == fnick), None)
+
+    if jugador_existente:
+        if fintento < jugador_existente['Intentos']:
+            jugador_existente.update({'Intentos': fintento, 'Tiempo': ftiempo, 'Hora': fhora, 'Fecha': ffecha})
+    else:
+        jugador = {'Nombre': fnick, 'Tiempo': ftiempo, 'Intentos': fintento, 'Hora': fhora, 'Fecha': ffecha}
+        ranking.append(jugador)
+
     ranking_archivo = ranking[:10]
     f = open("ranking.dat", 'wb')
     pickle.dump(ranking_archivo, f)
@@ -247,8 +255,10 @@ def rankingRecord():
     f.close()
     ranking10 = sorted(ranking, key=lambda x: (x['Intentos'], x['Tiempo']))
     print('Top 10 jugadores: ')
+    indice = 0
     for jugadores in ranking10:
-        print('El jugador %s consiguió a las %s del dia %s adivinar la combianción en %s intentos y %s segundos.' % (jugadores['Nombre'], jugadores['Hora'], jugadores['Fecha'], jugadores['Intentos'], jugadores['Tiempo']))
+        indice += 1
+        print('%i. El jugador %s consiguió a las %s del dia %s adivinar la combianción en %s intentos y %s segundos.' % (indice, jugadores['Nombre'], jugadores['Hora'], jugadores['Fecha'], jugadores['Intentos'], jugadores['Tiempo']))
     print()
 
 
