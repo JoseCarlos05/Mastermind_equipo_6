@@ -239,7 +239,7 @@ def actualizar_rankingRecord(fnick, fintento, ftiempo, fhora, ffecha):
         if fintento < jugador_existente['Intentos']:
             jugador_existente.update({'Intentos': fintento, 'Tiempo': round(ftiempo, 3), 'Hora': fhora, 'Fecha': ffecha})
     else:
-        jugador = {'Nombre': fnick, 'Tiempo': ftiempo, 'Intentos': fintento, 'Hora': fhora, 'Fecha': ffecha}
+        jugador = {'Nombre': fnick, 'Tiempo': round(ftiempo, 3), 'Intentos': fintento, 'Hora': fhora, 'Fecha': ffecha}
         ranking.append(jugador)
 
     ranking_archivo = ranking[:10]
@@ -262,7 +262,8 @@ def rankingRecord():
     indice = 0
     for jugadores in ranking10:
         indice += 1
-        print('%i. El jugador %s consiguió a las %s del dia %s adivinar la combianción en %s intentos y %s segundos.' % (indice, jugadores['Nombre'], jugadores['Hora'], jugadores['Fecha'], jugadores['Intentos'], jugadores['Tiempo']))
+        tiempo_format = "{:.3f}".format(jugadores['Tiempo'])
+        print('%i. El jugador %s consiguió a las %s del dia %s adivinar la combianción en %s intentos y %s segundos.' % (indice, jugadores['Nombre'], jugadores['Hora'], jugadores['Fecha'], jugadores['Intentos'], tiempo_format))
     print()
 
 
