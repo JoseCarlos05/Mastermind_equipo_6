@@ -112,14 +112,13 @@ def juegoMastermind():
                     print('\n\t¡Has adivinado la combinación!')
                     print(f'\t\t\t¡En {intento} intentos!')
                     volver_jugar = input('\n\t\t¿Volvemos a jugar (S/N)? ')
-                    print('\n')
 
                     if volver_jugar == 'S' or volver_jugar == 's':
                         print('\n')
                         ocultar_mensaje_en_imagen()
                         juegoMastermind()
                     elif volver_jugar == 'N' or volver_jugar == 'n':
-                        print('\t\t\tFin del juego\n')
+                        print('\t\t\t   Fin del juego\n')
                     else:
                         print('\nTienes que escribir S (Sí) o N (No)')
 
@@ -136,13 +135,12 @@ def juegoMastermind():
                     print('\n\t\t¡Has agotado los intentos!')
 
                     volver_jugar = input('\n\t\t¿Volvemos a jugar (S/N)? ')
-                    print('\n')
 
                     if volver_jugar == 'S' or volver_jugar == 's':
                         ocultar_mensaje_en_imagen()
                         juegoMastermind()
                     elif volver_jugar == 'N' or volver_jugar == 'n':
-                        print('\t\t\tFin del juego\n')
+                        print('\t\t\t   Fin del juego\n')
                     else:
                         print('Tienes que escribir S (Sí) o N (No)')
                     break
@@ -187,12 +185,11 @@ def juegoMastermind():
                     print('\n\t¡Has adivinado la combinación!')
                     print(f'\t\t\t¡En {intento} intentos!')
                     volver_jugar = input('\n\t\t¿Volvemos a jugar (S/N)? ')
-                    print('\n')
 
                     if volver_jugar == 'S' or volver_jugar == 's':
                         juegoMastermind()
                     elif volver_jugar == 'N' or volver_jugar == 'n':
-                        print('\t\t\tFin del juego\n')
+                        print('\t\t\t   Fin del juego\n')
                     else:
                         print('Tienes que escribir S (Sí) o N (No)')
 
@@ -209,12 +206,11 @@ def juegoMastermind():
                     print('\n\t\t¡Has agotado los intentos!')
 
                     volver_jugar = input('\n\t\t ¿Volvemos a jugar (S/N)? ')
-                    print('\n')
 
                     if volver_jugar == 'S' or volver_jugar == 's':
                         juegoMastermind()
                     elif volver_jugar == 'N' or volver_jugar == 'n':
-                        print('\t\t\tFin del juego\n')
+                        print('\t\t\t   Fin del juego\n')
                     else:
                         print('Tienes que escribir S (Sí) o N (No)')
                     break
