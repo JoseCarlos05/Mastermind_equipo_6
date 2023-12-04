@@ -267,8 +267,8 @@ def rankingRecord():
         jugadas.append(jugadores)
     ranking = pd.DataFrame(jugadas)
     ranking['Posición'] = range(1, len(ranking) + 1)
-    ranking_final = ranking[['Posición', 'Nombre', 'Tiempo', 'Hora', 'Fecha']]
-    print(ranking_final.to_string(index=False))
+    ranking_final = ranking[['Posición', 'Nombre', 'Intentos', 'Tiempo', 'Hora', 'Fecha']]
+    print(ranking_final.to_string(index=False, col_space=10))
     print()
 
 
