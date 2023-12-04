@@ -63,12 +63,6 @@ def ocultar_mensaje_en_imagen():
     return
 
 
-def verificarPalabraAgregada(codigo_imagen):
-    # Verificar si se ha añadido la palabra al código de la imagen
-    patron = "Combinación generada y ocultada:"
-    return patron in codigo_imagen
-
-
 def juegoMastermind():
     # Solicitar al usuario el tipo de combinación a generar
     global tiempo_inicial, tiempo_final
@@ -103,24 +97,24 @@ def juegoMastermind():
                         resultado += ' x '
 
                 print(resultado + '\n')
-                final = final + '\n\t  ' + propuesto + '\t\t\t ' + resultado
+                final = final + '\n\t\t  ' + propuesto + '\t\t\t ' + resultado
 
                 if resultado == ' ◯  ◯  ◯  ◯  ◯ ':
-                    print('\tPropuesto\t\t\tResultado')
+                    print('\t\tPropuesto\t\t\tResultado')
                     print(final)
 
-                    print('\n\t¡Has adivinado la combinación!')
+                    print('\n\t\t¡Has adivinado la combinación!')
                     print(f'\t\t\t¡En {intento} intentos!')
-                    volver_jugar = input('\n\t\t¿Volvemos a jugar (S/N)? ')
+                    volver_jugar = input('\n\t\t\t¿Volvemos a jugar (S/N)? ')
 
                     if volver_jugar == 'S' or volver_jugar == 's':
                         print('\n')
                         ocultar_mensaje_en_imagen()
                         juegoMastermind()
                     elif volver_jugar == 'N' or volver_jugar == 'n':
-                        print('\t\t\t   Fin del juego\n')
+                        print('\t\t\t\t   Fin del juego\n')
                     else:
-                        print('\nTienes que escribir S (Sí) o N (No)')
+                        print('\n\tTienes que escribir S (Sí) o N (No)')
 
                     tiempo_final = time.time()
                     tiempo = tiempo_final - tiempo_inicial
@@ -129,23 +123,24 @@ def juegoMastermind():
                     actualizar_rankingRecord(nick, intento, tiempo, hora, fecha)
                     break
                 elif intento == 4 and resultado != ' ◯  ◯  ◯  ◯  ◯ ':
-                    print('\tPropuesto\t\t\tResultado')
+                    print('\t\tPropuesto\t\t\tResultado')
                     print(final)
 
-                    print('\n\t\t¡Has agotado los intentos!')
+                    print('\n\t\t\t¡Has agotado los intentos!')
 
-                    volver_jugar = input('\n\t\t¿Volvemos a jugar (S/N)? ')
+                    volver_jugar = input('\n\t\t\t¿Volvemos a jugar (S/N)? ')
 
                     if volver_jugar == 'S' or volver_jugar == 's':
+                        print('\n')
                         ocultar_mensaje_en_imagen()
                         juegoMastermind()
                     elif volver_jugar == 'N' or volver_jugar == 'n':
-                        print('\t\t\t   Fin del juego\n')
+                        print('\t\t\t\t   Fin del juego\n')
                     else:
-                        print('Tienes que escribir S (Sí) o N (No)')
+                        print('\tTienes que escribir S (Sí) o N (No)')
                     break
             else:
-                print('El número tiene que tener 5 dígitos')
+                print('El número tiene que tener 5 dígitos\n')
                 intento -= 1
 
 
@@ -187,6 +182,8 @@ def juegoMastermind():
                     volver_jugar = input('\n\t\t¿Volvemos a jugar (S/N)? ')
 
                     if volver_jugar == 'S' or volver_jugar == 's':
+                        print('\n')
+                        ocultar_mensaje_en_imagen()
                         juegoMastermind()
                     elif volver_jugar == 'N' or volver_jugar == 'n':
                         print('\t\t\t   Fin del juego\n')
@@ -208,6 +205,8 @@ def juegoMastermind():
                     volver_jugar = input('\n\t\t ¿Volvemos a jugar (S/N)? ')
 
                     if volver_jugar == 'S' or volver_jugar == 's':
+                        print('\n')
+                        ocultar_mensaje_en_imagen()
                         juegoMastermind()
                     elif volver_jugar == 'N' or volver_jugar == 'n':
                         print('\t\t\t   Fin del juego\n')
@@ -215,7 +214,7 @@ def juegoMastermind():
                         print('Tienes que escribir S (Sí) o N (No)')
                     break
             else:
-                print('La palabra tiene que tener 7 letras')
+                print('La palabra tiene que tener 7 letras\n')
                 intento -= 1
     return
 
