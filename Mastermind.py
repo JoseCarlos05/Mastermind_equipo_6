@@ -4,6 +4,7 @@ import time
 import pickle
 from stegano import lsb
 import os
+import pandas as pd
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
@@ -122,10 +123,11 @@ def juegoMastermind():
 
                     tiempo_final = time.time()
                     tiempo = tiempo_final - tiempo_inicial
+                    tiempo_format = "{:.3f}".format(tiempo)
                     hora = time.strftime("%H:%M:%S", time.localtime())
                     fecha = time.strftime("%Y-%m-%d", time.localtime())
-                    actualizar_rankingRecord(nick, intento, tiempo, hora, fecha)
-                    informePartidas(nick, intento, tiempo, hora, fecha)
+                    actualizar_rankingRecord(nick, intento, tiempo_format, hora, fecha)
+                    informePartidas(nick, intento, tiempo_format, hora, fecha)
                     break
                 elif intento == 4 and resultado != ' ◯  ◯  ◯  ◯  ◯ ':
                     print('\t\tPropuesto\t\t\tResultado')
@@ -197,10 +199,11 @@ def juegoMastermind():
 
                     tiempo_final = time.time()
                     tiempo = tiempo_final - tiempo_inicial
+                    tiempo_format = "{:.3f}".format(tiempo)
                     hora = time.strftime("%H:%M:%S", time.localtime())
                     fecha = time.strftime("%Y-%m-%d", time.localtime())
-                    actualizar_rankingRecord(nick, intento, tiempo, hora, fecha)
-                    informePartidas(nick, intento, tiempo, hora, fecha)
+                    actualizar_rankingRecord(nick, intento, tiempo_format, hora, fecha)
+                    informePartidas(nick, intento, tiempo_format, hora, fecha)
                     break
                 elif intento == 7 and resultado != ' ◯  ◯  ◯  ◯  ◯  ◯  ◯  ◯ ':
                     print('\tPropuesto\t\t\tResultado')
@@ -259,11 +262,13 @@ def rankingRecord():
     f.close()
     ranking10 = sorted(ranking, key=lambda x: (x['Intentos'], x['Tiempo']))
     print('Top 10 jugadores: ')
-    indice = 0
+    jugadas = []
     for jugadores in ranking10:
-        indice += 1
-        tiempo_format = "{:.3f}".format(jugadores['Tiempo'])
-        print('%i. El jugador %s consiguió a las %s del dia %s adivinar la combianción en %s intentos y %s segundos.' % (indice, jugadores['Nombre'], jugadores['Hora'], jugadores['Fecha'], jugadores['Intentos'], tiempo_format))
+        jugadas.append(jugadores)
+    ranking = pd.DataFrame(jugadas)
+    ranking['Posición'] = range(1, len(ranking) + 1)
+    ranking_final = ranking[['Posición', 'Nombre', 'Tiempo', 'Hora', 'Fecha']]
+    print(ranking_final.to_string(index=False))
     print()
 
 
