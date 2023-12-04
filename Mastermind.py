@@ -4,6 +4,10 @@ import time
 import pickle
 from stegano import lsb
 import os
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+
 
 def creacionLogo():
     img = cv2.imread('Ficheros necesarios/mastermind_logorigin.png')
@@ -297,10 +301,6 @@ def menu():
 
 # PARTE PDF --------------------------
 
-
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 def create_pdf():
     elems = []
     datos = [["fecha_hora", "número", "combinación", "intentos", "tiempo(secs)", "conseguido"]]
