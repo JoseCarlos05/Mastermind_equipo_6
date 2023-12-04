@@ -225,11 +225,11 @@ def juegoMastermind():
             else:
                 print('La palabra tiene que tener 7 letras\n')
                 intento -= 1
-    return
+    return nick
 
 
 def actualizar_rankingRecord(fnick, fintento, ftiempo, fhora, ffecha):
-    f = open("Ficheros necesarios/ranking.dat", 'rb')
+    f = open("ranking.dat", 'rb')
     try:
         ranking = pickle.load(f)
     except EOFError:
@@ -253,7 +253,7 @@ def actualizar_rankingRecord(fnick, fintento, ftiempo, fhora, ffecha):
 
 
 def rankingRecord():
-    f = open("Ficheros necesarios/ranking.dat", 'rb')
+    f = open("ranking.dat", 'rb')
     try:
         ranking = pickle.load(f)
     except EOFError:
@@ -272,11 +272,48 @@ def rankingRecord():
     print()
 
 
-def informePartidas():
-    f = open('Ficheros necesarios/partidas.txt', 'a')
+def informePartidas(fnick, fintento, ftiempo, fhora, ffecha):
+    f = open('partidas.txt', 'a')
     f.write('{0} {1} {2} {3} {4}\n'.format(fnick, fintento, ftiempo, fhora, ffecha))
     f.close()
     return
+
+
+def informePartidas_pdf(nick):
+    datos = [["posicion", "nombre", "intentos", "tiempo(secs)", "hora", "fecha"]]
+    f = open("Ficheros necesarios/partidas.txt")
+    partidas = f.read()
+    f.close()
+    partidas.split("\n")
+    for p in range(len(partidas)):
+        if partidas[p] != "":
+            partidas_jugadas = partidas[p]
+            split = partidas_jugadas.split("$")
+            datos.append(split)
+    num_partidas = len(partidas)
+
+    pdf = canvas.Canvas("partidas.pdf", pagesize=letter)
+    pdf.drawInlineImage("mastermind_logorigin.png", 150, 600, width=300, height=200)
+    pdf.setFillColor(colors.lightgrey)
+    pdf.rect(50, 545, 500, 25, fill=True)
+    pdf.setFillColor(colors.black)
+    pdf.drawString(230, 553, "INFORME DE LAS PARTIDAS", )
+
+    col_width = [85, 85, 85, 85, 85, 85]
+    tabla = Table(datos, col_width)
+    style = TableStyle([
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.blue),
+        ("TEXTCOLOR", (0, 1), (-1, -1), colors.red),
+        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+        ("BOX", (0, 0), (-1, -1), 2, colors.black),
+        ("GRID", (0, 1), (-1, -1), 2, colors.black)
+    ])
+    tabla.setStyle(style)
+    tabla.wrapOn(pdf, 0, 0)
+    tabla.drawOn(pdf, 50, 470)
+    pdf.drawString(70, 490, f"El jugador {nick} ha jugado las siguientes {num_partidas} partidas")
+    pdf.drawString(70, 370, f" Su mejor partida ha sido:\n{random.randint(1,5)}")
+    pdf.save()
 
 
 def menu():
@@ -297,11 +334,11 @@ def menu():
         elif opcion == 2:
             ocultar_mensaje_en_imagen()
         elif opcion == 3:
-            juegoMastermind()
+            nick = juegoMastermind()
         elif opcion == 4:
             rankingRecord()
         elif opcion == 5:
-            informePartidas()
+            informePartidas_pdf(nick)
         elif opcion == 6:
             bucle = False
 
