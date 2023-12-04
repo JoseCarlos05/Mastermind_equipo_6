@@ -237,7 +237,7 @@ def actualizar_rankingRecord(fnick, fintento, ftiempo, fhora, ffecha):
 
     if jugador_existente:
         if fintento < jugador_existente['Intentos']:
-            jugador_existente.update({'Intentos': fintento, 'Tiempo': ftiempo, 'Hora': fhora, 'Fecha': ffecha})
+            jugador_existente.update({'Intentos': fintento, 'Tiempo': round(ftiempo, 3), 'Hora': fhora, 'Fecha': ffecha})
     else:
         jugador = {'Nombre': fnick, 'Tiempo': ftiempo, 'Intentos': fintento, 'Hora': fhora, 'Fecha': ffecha}
         ranking.append(jugador)
