@@ -295,6 +295,42 @@ def menu():
         elif opcion == 6:
             bucle = False
 
+# PARTE PDF --------------------------
+
+
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+def create_pdf():
+    elems = []
+    datos = [["fecha_hora", "número", "combinación", "intentos", "tiempo(secs)", "conseguido"]]
+    ranking = "ranking.dat"
+    pdf = SimpleDocTemplate(
+        filename="partidas.pdf",
+        pagesize=letter
+    )
+    image_path = "mastermind_logorigin.png"
+    elems.append(image_path)
+    #-----------------------------
+    texto1 = f"El jugador {"placeholder"} ha jugado las siguientes {"placeholder"} partidas"
+    elems.append(texto1)
+    #-----------------------------
+
+
+    table = Table(datos, TableStyle([
+        ('BACKGROUND', (0, 0), (-1, -1), colors.white),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.blue),
+        ("TEXTCOLOR", (0, 1), (-1, -1), colors.red),
+        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+        ("BOX", (0, 0), (-1, -1), 2, colors.black),
+        ("GRID", (0, 1), (-1, -1), 2, colors.black)
+    ]))
+    elems.append(table)
+    #------------------------------
+    texto2 = f"Su mejor partida ha sido {f.readline(1)}"
+    elems.append(texto2)
+    pdf.build(elems)
+
 
 if __name__ == '__main__':
     menu()
