@@ -229,7 +229,7 @@ def juegoMastermind():
 
 
 def actualizar_rankingRecord(fnick, fintento, ftiempo, fhora, ffecha):
-    f = open("ranking.dat", 'rb')
+    f = open("Ficheros necesarios/ranking.dat", 'rb')
     try:
         ranking = pickle.load(f)
     except EOFError:
@@ -253,7 +253,7 @@ def actualizar_rankingRecord(fnick, fintento, ftiempo, fhora, ffecha):
 
 
 def rankingRecord():
-    f = open("ranking.dat", 'rb')
+    f = open("Ficheros necesarios/ranking.dat", 'rb')
     try:
         ranking = pickle.load(f)
     except EOFError:
@@ -273,7 +273,7 @@ def rankingRecord():
 
 
 def informePartidas():
-    f = open('partidas.txt', 'a')
+    f = open('Ficheros necesarios/partidas.txt', 'a')
     f.write('{0} {1} {2} {3} {4}\n'.format(fnick, fintento, ftiempo, fhora, ffecha))
     f.close()
     return
