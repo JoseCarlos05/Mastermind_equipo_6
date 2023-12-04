@@ -121,6 +121,7 @@ def juegoMastermind():
                     hora = time.strftime("%H:%M:%S", time.localtime())
                     fecha = time.strftime("%Y-%m-%d", time.localtime())
                     actualizar_rankingRecord(nick, intento, tiempo, hora, fecha)
+                    informePartidas(nick, intento, tiempo, hora, fecha)
                     break
                 elif intento == 4 and resultado != ' ◯  ◯  ◯  ◯  ◯ ':
                     print('\t\tPropuesto\t\t\tResultado')
@@ -195,6 +196,7 @@ def juegoMastermind():
                     hora = time.strftime("%H:%M:%S", time.localtime())
                     fecha = time.strftime("%Y-%m-%d", time.localtime())
                     actualizar_rankingRecord(nick, intento, tiempo, hora, fecha)
+                    informePartidas(nick, intento, tiempo, hora, fecha)
                     break
                 elif intento == 7 and resultado != ' ◯  ◯  ◯  ◯  ◯  ◯  ◯  ◯ ':
                     print('\tPropuesto\t\t\tResultado')
@@ -261,8 +263,9 @@ def rankingRecord():
 
 
 def informePartidas():
-    # Implementar la generación del informe de partidas en PDF
-    # (Esta parte del código está pendiente de implementar)
+    f = open('partidas.txt', 'a')
+    f.write('{0} {1} {2} {3} {4}\n'.format(fnick, fintento, ftiempo, fhora, ffecha))
+    f.close()
     return
 
 
